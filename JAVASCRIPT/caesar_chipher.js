@@ -1,3 +1,5 @@
+// link of the challenge : https://www.codewars.com/kata/546937989c0b6ab3c5000183
+
 function encryptor(key, message){
 
     // alphabet in uppercase
