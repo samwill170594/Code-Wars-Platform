@@ -15,3 +15,4 @@ def pig_it(text):
 
 
 print(pig_it("Hello world !"))
+print(string.punctuation)
