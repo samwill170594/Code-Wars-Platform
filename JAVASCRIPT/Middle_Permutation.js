@@ -47,7 +47,8 @@ function generatePermutation (arr)
      }
    }
    
-   return resultArr.sort((a,b) => a < b);
+   return resultArr.sort();
+   //(a,b) => a < b
 }
 
 
