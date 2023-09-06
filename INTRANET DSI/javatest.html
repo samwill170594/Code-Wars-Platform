@@ -1,0 +1,267 @@
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <style>
+        /* stylelint-disable selector-list-comma-newline-after */
+
+        .blog-header {
+            line-height: 1;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .blog-header-logo {
+            font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+            font-size: 2.25rem;
+        }
+
+        .blog-header-logo:hover {
+            text-decoration: none;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+        }
+
+        .display-4 {
+            font-size: 2.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .display-4 {
+                font-size: 3rem;
+            }
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-scroller .nav-link {
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+            font-size: .875rem;
+        }
+
+        .card-img-right {
+            height: 100%;
+            border-radius: 0 3px 3px 0;
+        }
+
+        .flex-auto {
+            flex: 0 0 auto;
+        }
+
+        .h-250 {
+            height: 250px;
+        }
+
+        @media (min-width: 768px) {
+            .h-md-250 {
+                height: 250px;
+            }
+        }
+
+        /* Pagination */
+        .blog-pagination {
+            margin-bottom: 4rem;
+        }
+
+        .blog-pagination>.btn {
+            border-radius: 2rem;
+        }
+
+        /*
+        * Blog posts
+        */
+        .blog-post {
+            margin-bottom: 4rem;
+        }
+
+        .blog-post-title {
+            margin-bottom: .25rem;
+            font-size: 2.5rem;
+        }
+
+        .blog-post-meta {
+            margin-bottom: 1.25rem;
+            color: #727272;
+        }
+
+        
+    </style>
+
+    <div class="container">
+
+        <div class="row py-5 text-center container">
+            <div class="col-md-4 mx-auto">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Rechercher</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-sm" id="mxSearch" onkeyup="search()">
+                </div>
+            </div>
+            <div class="col-md-4 mx-auto">
+                <div class="input-group input-group-sm mb-3" id="inputCategorie">
+                    <label class="input-group-text" for="inputGroupSelect01">Carégories</label>
+                    <select class="form-select" id="cat" onchange="search()">
+                        <option selected value="Tous">Tout les éléments</option>
+
+
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 mx-auto">
+                <div class="input-group input-group-sm mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01" id="inputType">Type de catalogue</label>
+                    <select class="form-select" id="montype" onchange="search()">
+                        <option selected value="Tous">Tout les éléments</option>
+                        <option value="Service">Service</option>
+                        <option value="Solution">Solution</option>
+                    </select>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row mb-2" id="mxDivContainer">
+
+
+
+        </div>
+    </div>
+
+
+<script>
+
+
+var mx = fetch('https://teamsite.msc.com/sites/fr037-agl-dsi-catalogue-services/Documents%20partages/CatalogueListeJson/script.json')
+    .then((response) => response.json())
+    .then(response=> mx = response)
+    .then((json) => {
+        search();
+    
+    });
+
+    var mxDivContainer = document.getElementById("mxDivContainer");
+
+    function search() {
+        var category = document.getElementById("cat").value
+        var type = document.getElementById("montype").value
+        var v = document.getElementById("mxSearch").value
+        var card = "<div class='col-md-6'><div class='row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative'><div style='width:40%; padding: 3px;'>image</div><div style='width:60%;'><div class='col p-2 d-flex flex-column position-static'><h5 class='mb-2'>title</h5><p class='card-text mb-auto' style='font-size:12px'><b>categorie</b></p><p class='card-text mb-auto' style='font-size:12px'><b>type</b></p><div style=' overflow-wrap: break-word;  height: 100px; overflow: auto;'>description</div>urlPage<button class='btn btn-primary' style='background-color: #2F60A7; margin-left: 80%; margin-top: 10px;' type='button'>Go</button></a></div></div></div></div>";
+        mxDivContainer.innerHTML = "";
+
+        var filter = mx.filter((x) => (type != null && type != "Tous" ? x.Type.toLowerCase().includes(type.toLowerCase()) : x.Type.includes("")) && (category != null && category != "Tous" ? x.Categorie.toLowerCase().includes(category.toLowerCase()) : x.Categorie.toLowerCase().includes("")) && (v != null ? x.Title.toLowerCase().includes(v.toLowerCase()) || x.Description.toLowerCase().includes(v.toLowerCase()) : x.Title.toLowerCase().includes("")));
+
+        for (var i = 0; i < filter.length; i++) {
+            mxDivContainer.innerHTML += card.replace("title", filter[i].Title).replace("description", filter[i].Description).replace("categorie", filter[i].Categorie).replace("type", filter[i].Type).replace("image", filter[i].UrlImage).replace("urlPage", filter[i].UrlPage);
+        }
+
+
+
+    }
+
+
+   
+    //function element of input select
+    var grcat = fetch('https://teamsite.msc.com/sites/fr037-agl-dsi-catalogue-services/Documents%20partages/CategorieJson/script.json')
+    .then((response) => response.json())
+    .then(response=> grcat = response)
+    .then((json) => {
+	    grcat = json;
+	    var catSelect = document.getElementById("cat");
+        for (var i = 0; i < grcat.length; i++) {
+            var option = document.createElement("option");
+            option.innerHTML = grcat[i].Title;
+            option.value = grcat[i].Title;
+            catSelect.add(option);
+        }
+});
+
+
+//var detailsButton = document.getElementsByClassName("btn_detail");
+
+
+document.addEventListener('click', function(e){
+    
+    if(e.target.type === "button" && e.target.parentNode.nodeName.toLowerCase() == "a" && e.target.parentNode.className === "btn_detail"){
+
+        e.preventDefault();
+        localStorage.removeItem("SPT_DETAIL_CATALOGUE_SERVICE");
+        var filter = mx.filter((x) => (Number(x.ID) === Number(e.target.parentNode.id)));
+
+        for(var i = 0; i < filter.length; i++){
+            localStorage.setItem("SPT_DETAIL_CATALOGUE_SERVICE",JSON.stringify({
+            ID: filter[i].ID,
+            Title: filter[i].Title,
+            Description: filter[i].Description,
+            Categorie : filter[i].Categorie,
+            Type : filter[i].Type,
+            UrlImage : filter[i].UrlImage,
+            UrlPage : filter[i].UrlPage
+
+        }));
+
+        console.log(localStorage.getItem("SPT_DETAIL_CATALOGUE_SERVICE"));
+        }
+  
+    }
+
+
+});
+
+
+
+</script>
